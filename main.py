@@ -102,9 +102,12 @@ def handle_query(call):
                 img_path = f'./img/{img_name}.jpg'
                 with open(img_path, 'wb') as f:
                     f.write(photo)
-                img_send = open(f'./img/{img_name}.jpg', 'rb')
+                    f.close()
+                img_send = open(img_path, 'rb')
                 markup = types.InlineKeyboardMarkup()
+                back_btn = types.InlineKeyboardButton(text="❌叉出去", callback_data='close')
                 home_btn = types.InlineKeyboardButton(text="🏠换个平台", callback_data="home")
+                markup.add(back_btn)
                 markup.add(home_btn)
                 bot.send_photo(chat_id=chat_id, photo=img_send, caption=message_text, reply_markup=markup, parse_mode='Markdown')
                 img_send.close()
